@@ -5,7 +5,7 @@ const dbConnection = require("./config/db");
 const app = express();
 
 dbConnection();
-
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
