@@ -1,11 +1,12 @@
 const express = require("express");
 const dotenv = require("dotenv").config();
+const cors = require("cors"); // Add this line
 const dbConnection = require("./config/db");
 
 const app = express();
 
 dbConnection();
-app.use(cors());
+app.use(cors()); // Ensure CORS is used after the import
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
