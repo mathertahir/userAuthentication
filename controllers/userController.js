@@ -93,7 +93,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const forgotPassword = asyncHandler(async (req, res) => {
   try {
-    const user = await User.findOne({ email: req.body.email.toLowerCase() });
+    const user = await User.find({ email: req.body.email.toLowerCase() });
     if (!user) {
       return res.status(401).json("Email Not Found");
     }
