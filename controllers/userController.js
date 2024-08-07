@@ -64,7 +64,7 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("Please provide both email and password");
   }
 
-  const user = await User.findOne({ email });
+  const user = await User.find({ email });
 
   if (!user) {
     res.status(400);
@@ -115,7 +115,7 @@ const verifyOtp = asyncHandler(async (req, res) => {
   const { otp } = req.body;
 
   try {
-    const otpVerified = await VerificationOtp.findOne({ otp });
+    const otpVerified = await VerificationOtp.find({ otp });
 
     if (!otpVerified) {
       return res.status(404).json({ code: 404, message: "Invalid OTP" });
@@ -136,7 +136,7 @@ const ResetPassword = asyncHandler(async (req, res) => {
 
   const { otp, password } = req.body;
 
-  const otpVerified = await VerificationOtp.findOne({ otp });
+  const otpVerified = await VerificationOtp.find({ otp });
 
   if (!otpVerified) {
     return res.status(404).json({ code: 404, message: "Invalid OTP" });
