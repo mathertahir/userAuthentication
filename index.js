@@ -5,7 +5,6 @@ const dbConnection = require("./config/db");
 
 const app = express();
 
-dbConnection();
 app.use(cors()); // Ensure CORS is used after the import
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,7 +16,7 @@ const port = process.env.PORT || 5000;
 app.get("/", (req, res) => {
   res.send("Hey this is my API running 🥳");
 });
-
+dbConnection();
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
 });

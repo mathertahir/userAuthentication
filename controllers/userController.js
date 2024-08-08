@@ -21,7 +21,7 @@ const registerUser = asyncHandler(async (req, res) => {
 
   const { username, email, password, phnumber } = req.body;
 
-  const existEmail = await User.find({ email });
+  const existEmail = await User.findOne({ email });
 
   if (existEmail) {
     return res.status(400).json({ message: "Email already exists" });
@@ -64,7 +64,7 @@ const loginUser = asyncHandler(async (req, res) => {
     throw new Error("Please provide both email and password");
   }
 
-  const user = await User.find({ email });
+  const user = await User.findOne({ email });
 
   if (!user) {
     res.status(400);
@@ -93,7 +93,7 @@ const loginUser = asyncHandler(async (req, res) => {
 
 const forgotPassword = asyncHandler(async (req, res) => {
   try {
-    const user = await User.find({ email: req.body.email.toLowerCase() });
+    const user = await User.findOne({ email: req.body.email.toLowerCase() });
     if (!user) {
       return res.status(401).json("Email Not Found");
     }
@@ -115,7 +115,7 @@ const verifyOtp = asyncHandler(async (req, res) => {
   const { otp } = req.body;
 
   try {
-    const otpVerified = await VerificationOtp.find({ otp });
+    const otpVerified = await VerificationOtp.findOne({ otp });
 
     if (!otpVerified) {
       return res.status(404).json({ code: 404, message: "Invalid OTP" });
@@ -136,7 +136,7 @@ const ResetPassword = asyncHandler(async (req, res) => {
 
   const { otp, password } = req.body;
 
-  const otpVerified = await VerificationOtp.find({ otp });
+  const otpVerified = await VerificationOtp.findOne({ otp });
 
   if (!otpVerified) {
     return res.status(404).json({ code: 404, message: "Invalid OTP" });
@@ -150,7 +150,7 @@ const ResetPassword = asyncHandler(async (req, res) => {
   console.log(hashedPassword, "Hashed Password");
 
   try {
-    await User.findByIdAndUpdate(otpVerified.userId, {
+    await User.findOneByIdAndUpdate(otpVerified.userId, {
       $set: {
         password: hashedPassword,
       },
